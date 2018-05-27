@@ -2,15 +2,14 @@ namespace EventSystem
 {
     class Event
     {
-    }
+        public class CreateTransaction : Event
+        {
+            public string TxHash { get; set; }
+        }
 
-    class Event_CreateTransaction : Event
-    {
-        public string TxHash { get; set; }
-    }
-
-    class Event_CreateBlock : Event
-    {
-        public string BlockHash { get; set; }
+        public class CreateBlock : Event
+        {
+            public string BlockHash { get; set; }
+        }
     }
 }
