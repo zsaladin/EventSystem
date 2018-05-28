@@ -6,40 +6,53 @@ namespace EventSystem
     {
         static void Main(string[] args)
         {
-            EventSystem eventSystem = new EventSystem();
+            new Program();
+        }
 
-            eventSystem.Subscribe<Event.CreateBlock>(Callback10, 10);
-            eventSystem.Subscribe<Event.CreateBlock>(Callback0);
+        EventSystem _eventSystem = new EventSystem();
+        Program()
+        {
+            Subscribe();
+            Publish();
+        }
 
-            eventSystem.Subscribe<Event.CreateTransaction>(Callback0);
-            eventSystem.Subscribe<Event.CreateTransaction>(Callback10, 10);
+        void Subscribe()
+        {
+            _eventSystem.Subscribe<Event.CreateBlock>(Callback10, 10);
+            _eventSystem.Subscribe<Event.CreateBlock>(Callback0);
 
+            _eventSystem.Subscribe<Event.CreateTransaction>(Callback0);
+            _eventSystem.Subscribe<Event.CreateTransaction>(Callback10, 10);
+        }
+
+        void Publish()
+        {
             Event.CreateBlock event0 = new Event.CreateBlock();
             event0.BlockHash = "abc";
 
             Event.CreateTransaction event1 = new Event.CreateTransaction();
             event1.TxHash = "123";
 
-            eventSystem.Publish(event0);
-            eventSystem.Publish(event1);
+            _eventSystem.Publish(event0);
+            _eventSystem.Publish(event1);
         }
 
-        static void Callback0(Event.CreateBlock e)
+        void Callback0(Event.CreateBlock e)
         {
             Console.WriteLine($"Order 0, {e.BlockHash}");
         }
 
-        static void Callback10(Event.CreateBlock e)
+        void Callback10(Event.CreateBlock e)
         {
             Console.WriteLine($"Order 10, {e.BlockHash}");
         }
 
-        static void Callback0(Event.CreateTransaction e)
+        void Callback0(Event.CreateTransaction e)
         {
             Console.WriteLine($"Order 0, {e.TxHash}");
         }
 
-        static void Callback10(Event.CreateTransaction e)
+        void Callback10(Event.CreateTransaction e)
         {
             Console.WriteLine($"Order 10, {e.TxHash}");
         }
