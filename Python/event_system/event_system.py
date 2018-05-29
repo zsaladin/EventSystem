@@ -15,6 +15,10 @@ class EventSystem:
         callbacks.append(EventSystem.Callback(callback, order))
         callbacks.sort(key=lambda c: c.order)
 
+    def unsubscribe(self, event, callback):
+        callbacks: list = self.__callbacks[event]
+        callbacks[:] = [cb for cb in callbacks if cb.callback != callback]
+
     def publish(self, event):
         callbacks = self.__callbacks[type(event)]
         for callback in callbacks:
