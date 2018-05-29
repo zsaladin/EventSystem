@@ -1,6 +1,5 @@
-from enum import Enum
+from collections import namedtuple
 
-
-class Event(Enum):
-    create_tx = 0
-    create_block = 1
+class Event:
+    CreateTx = namedtuple('CreateTx', 'tx_hash')
+    CreateBlock = namedtuple('CreateBlock', 'block_hash')

@@ -15,7 +15,7 @@ class EventSystem:
         callbacks.append(EventSystem.Callback(callback, order))
         callbacks.sort(key=lambda c: c.order)
 
-    def publish(self, event, *args, **kwargs):
-        callbacks = self.__callbacks[event]
+    def publish(self, event):
+        callbacks = self.__callbacks[type(event)]
         for callback in callbacks:
-            callback.callback(*args, **kwargs)
+            callback.callback(event)
